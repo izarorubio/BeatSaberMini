@@ -6,7 +6,7 @@ public class Marcador : MonoBehaviour
 {
     public TMP_Text puntosText;
     private int puntos = 0;
-    private int totalPuntos = 5;
+    private int totalPuntos = 20;
 
     private ProyectilSpawner spawner;
 
