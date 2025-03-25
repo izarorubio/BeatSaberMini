@@ -10,7 +10,10 @@ public class ProyectilSpawner : MonoBehaviour
     public float tiempoSpawnMin = 2f; 
     public float tiempoSpawnMax = 3f;
     // Rango para variar la dirección del cubo
-    public float destinationOffsetRange = 2f; 
+    public float destinationOffsetRange = 2f;
+    // Para detener los proyectiles cuando finalice
+    private bool juegoTerminado = false;
+
 
     void Start()
     {
@@ -20,7 +23,7 @@ public class ProyectilSpawner : MonoBehaviour
 
     IEnumerator SpawnCubes()
     {
-        while (true) // Bucle infinito para instanciar cubos
+        while (!juegoTerminado) // Bucle para instanciar cubos (solo sigue si el juego no ha terminado)
         {
             // Calcular offset aleatorio para variar la dirección
             float offset = Random.Range(-destinationOffsetRange, destinationOffsetRange);
@@ -41,6 +44,13 @@ public class ProyectilSpawner : MonoBehaviour
             // Esperar un tiempo aleatorio (2-3'') antes de instanciar el siguiente cubo
             yield return new WaitForSeconds(Random.Range(tiempoSpawnMin, tiempoSpawnMax));
         }
+    }
+
+    // Detener el instanciar cubos (FIN)
+    public void DetenerDisparos()
+    {
+        juegoTerminado = true;
+        Debug.Log("Fin del juego, no se lanzan más cubos");
     }
 
 }

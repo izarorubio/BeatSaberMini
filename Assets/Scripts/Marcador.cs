@@ -8,6 +8,14 @@ public class Marcador : MonoBehaviour
     private int puntos = 0;
     private int totalPuntos = 5;
 
+    private ProyectilSpawner spawner;
+
+    void Start()
+    {
+        // Buscar spawner en la escena
+        spawner = FindObjectOfType<ProyectilSpawner>();
+    }
+
     // Sumar puntos en el marcador
     public void SumarPuntos()
     {
@@ -18,6 +26,18 @@ public class Marcador : MonoBehaviour
         if (puntos == totalPuntos)
         {
             puntosText.text = "FIN";
+
+            FinDelJuego();
+        }
+    }
+
+    //Llamar a detener lanzamiento de cubos si se finaliza el juego
+    private void FinDelJuego()
+    {
+        Debug.Log("Juego Terminado!");
+        if (spawner != null)
+        {
+            spawner.DetenerDisparos();
         }
     }
 }
