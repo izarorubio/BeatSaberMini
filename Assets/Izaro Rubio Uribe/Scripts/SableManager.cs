@@ -8,9 +8,10 @@ public class SableManager : MonoBehaviour
 
     void Start()
     {
-        // Leer si el jugador activó el doble sable
-        bool dobleSableActivo = PlayerPrefs.GetInt("DobleSable", 0) == 1;
+        // Para saber si el sable doble está activado en PlayerPrefs
+        bool dobleSableActivo = PlayerPrefs.GetInt("SableDoble", 0) == 1;
 
+        // Activar o desactivar el sable derecho según la preferencia guardada
         sableDerecho.SetActive(dobleSableActivo);
     }
 }
