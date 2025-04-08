@@ -6,7 +6,7 @@ public class Marcador : MonoBehaviour
 {
     public TMP_Text puntosText;
     private int puntos = 0;
-    private int totalPuntos = 20;
+    public int totalPuntos;
 
     private ProyectilSpawner spawner;
 
@@ -14,6 +14,14 @@ public class Marcador : MonoBehaviour
     {
         // Buscar spawner en la escena
         spawner = FindObjectOfType<ProyectilSpawner>();
+
+        // Si hay opciones guardadas, usarlas
+        if (OpcionesJugador.instancia != null)
+        {
+            totalPuntos = OpcionesJugador.instancia.puntosObjetivo;
+        }
+
+        puntosText.text = puntos.ToString();
     }
 
     // Sumar puntos en el marcador
@@ -29,6 +37,13 @@ public class Marcador : MonoBehaviour
 
             FinDelJuego();
         }
+    }
+
+    // Restar puntos en el marcador
+    public void RestarPuntos()
+    {
+        puntos = Mathf.Max(0, puntos - 1); // Evitar que baje de 0
+        puntosText.text = puntos.ToString();
     }
 
     //Llamar a detener lanzamiento de cubos si se finaliza el juego

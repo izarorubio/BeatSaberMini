@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Sable
   - Cube
+  - Bomba
   layers:
   - Default
   - TransparentFX

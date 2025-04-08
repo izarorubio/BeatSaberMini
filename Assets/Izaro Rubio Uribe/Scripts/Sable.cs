@@ -13,5 +13,13 @@ public class Sable : MonoBehaviour
             FindAnyObjectByType<Marcador>().SumarPuntos();
 
         }
+        //Si el objeto con el que colisiona tiene tag "Bomba"...
+        else if (other.CompareTag("Bomba")) //
+        {
+            // Destruir el cubo al golpear
+            Destroy(other.gameObject);
+            // Restar puntos en el marcador
+            FindAnyObjectByType<Marcador>().RestarPuntos();
+        }
     }
 }

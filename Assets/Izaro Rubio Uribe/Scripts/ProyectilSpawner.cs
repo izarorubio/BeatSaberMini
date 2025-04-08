@@ -1,9 +1,11 @@
 using System.Collections;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class ProyectilSpawner : MonoBehaviour
 {
-    public GameObject proyectilPrefab; 
+    public GameObject proyectilPrefab;
+    public GameObject bombaPrefab;
     public Transform jugadorTransform; // Transform del jugador (cámara)
     public float distancia = 10f; // Distancia fija desde el jugador
     // Tiempos entre instancias
@@ -14,11 +16,27 @@ public class ProyectilSpawner : MonoBehaviour
     // Para detener los proyectiles cuando finalice
     private bool juegoTerminado = false;
 
+    //Probabilidad de que aparezca una bomba
+    [Range(0f, 1f)]
+    public float bombProbability; 
+
 
     void Start()
     {
         // Iniciar bucle
         StartCoroutine(SpawnCubes());
+
+        // Que dependiendo de la escena haya bombas o no
+        string nombreEscena = SceneManager.GetActiveScene().name;
+
+        if (nombreEscena == "BeatSaberAvanzado")
+        {
+            bombProbability = 0.35f;
+        }
+        else
+        {
+            bombProbability = 0f; // Sin bombas
+        }
     }
 
     IEnumerator SpawnCubes()
@@ -35,8 +53,11 @@ public class ProyectilSpawner : MonoBehaviour
             // Fijar altura en la generación del proyectil
             spawnPos.y = 1f;
 
+            // Elegir entre proyectil normal o bomba
+            GameObject prefabAInstanciar = (Random.value < bombProbability) ? bombaPrefab : proyectilPrefab;
+
             // Instanciar cubo/proyectil
-            GameObject cube = Instantiate(proyectilPrefab, spawnPos, Quaternion.identity);
+            GameObject cube = Instantiate(prefabAInstanciar, spawnPos, Quaternion.identity);
 
             // Dar dirección hacia el jugador con un ligero offset
             cube.AddComponent<ProyectilMov>().Initialize(jugadorTransform.position, offset);
